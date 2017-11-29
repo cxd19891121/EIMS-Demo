@@ -1,7 +1,7 @@
 app.service('dataService', ['$http', '$httpParamSerializerJQLike', function ($http, $httpParamSerializerJQLike) {
 
     
-    var url = "";
+    var url = "https://eims-demo.herokuapp.com/";
     var config = {
         newUser: url + 'newuser/',
         baseUrl: url + 'api/',

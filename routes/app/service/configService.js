@@ -2,7 +2,7 @@
 
 app.service('configService', [function () {
     var vm = this;
-    var url  = 'https://dashboard.heroku.com/apps/eims-demo';
+    var url  = 'https://eims-demo.herokuapp.com';
     var localUrl = "http://localhost:3000";
     var config = {
         url: url,
@@ -13,7 +13,8 @@ app.service('configService', [function () {
     }
 
     var completeConfig = {
-        url: 'https://dashboard.heroku.com/apps/eims-demo',
+        url: 'https://eims-demo.herokuapp.com',
+        localUrl:'http://localhost:3000',
         api: {
             baseUrl: url + 'api/',
             search: url + 'search',
