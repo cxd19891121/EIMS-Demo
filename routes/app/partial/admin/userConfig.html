@@ -1,0 +1,128 @@
+<div ng-controller="userConfigController" data-ng-init="init()">
+    <div class="panel panel-blur ">
+    <div class="container">
+        <div class="row">
+            <h1>Account Management </h1>
+            <hr>
+
+            <h2>Change User Information</h2>
+        </div>
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th><a href="" ng-click="order('id')">User Id</a></th>
+                        <th><a href="" ng-click="order('username')">UserName</a></th>
+                        <th><a href="" ng-click="order('password')">Password</a></th>
+                        <th><a href="" ng-click="order('level')">Level</a></th>
+                        <th><a href="" ng-click="order('email')">Email</a></th>
+                        <th>Operation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in users | orderBy:predicate:reverse | filter:paginate" ng-class-odd='odd'>
+                        <td>{{ user .id }}</td>
+                        <td><input type="text" class="form-control" ng-model="user.username"></td>
+                        <td><input type="text" class="form-control" ng-model="user.password"></td>
+                        <td>
+
+                            <div ng-repeat="element in levels" class="btn-group">
+                                <div ng-show = "{{!element.hidden}}">
+                                <button ng-class="{'btn btn-primary': element.level==user.level , 'btn btn-default': element.level!=user.level}" ng-model="user.level" uib-btn-radio="element.level" uncheckable>{{element.name}}</button>
+                                </div>
+                            </div>
+
+                        </td>
+                        <td>
+                            <form role="form" name="emailForm" novalidate>
+                                <div  ng-class="{ 'has-error' : emailForm.email.$invalid && emailForm.email.$touched }">
+                                    <input name ="email" type="email" ng-required="true" class="form-control" ng-model="user.email" placeholder="eg: xxx@example.com **">
+                                </div>
+                                <div class="help-block" ng-messages="emailForm.email.$error" ng-show="emailForm.email.$touched">
+                                    <small ng-message="email" class="text-danger">Invalid Email</small>
+                                </div>
+                            </form>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="editUser(user.id)">
+                                <span class="glyphicon glyphicon-pencil"></span>Update
+                            </button>
+                            <button class="btn btn-primary" ng-click="deleteUser(user.id)">
+                                <span class="glyphicon glyphicon-pencil"></span>Delete
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <ul uib-pagination total-items="totalItems" ng-model="currentPage" max-size="20" boundary-links="true" items-per-page="pageSize"></ul>
+        </div>
+
+        <hr>
+        <div class="row">
+
+            <h2> Create New User </h2>
+            <div uib-alert dismiss-on-timeout="1000" ng-repeat="alert in alerts" ng-class="'alert-warning black_word'" close="closeAlert($index)">{{alert.msg}}</div>
+
+            <form class="form-horizontal" role="form" name="userForm" novalidate>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Name:</label>
+                    <div class="col-sm-4">
+                        <input ng-required="true" type="text" class="form-control" ng-model="newUser.username" placeholder="eg: username **">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Password:</label>
+                    <div class="col-sm-4">
+                        <input type="text" ng-required="true" class="form-control" ng-model="newUser.password" placeholder="eg: password **">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Level: </label>
+                    <div class="col-sm-4">
+
+                        <div class="btn-group" ng-repeat="element in levels">
+                            <div ng-show = "{{!element.hidden}}">
+                                <button ng-class="{'btn btn-primary': element.level==newUser.level , 'btn btn-default': element.level!=newUser.level}" ng-model="newUser.level" uib-btn-radio="element.level" uncheckable>{{element.name}}</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Email:</label>
+                    <div class="col-sm-4" ng-class="{ 'has-error' : userForm.email.$invalid && userForm.email.$touched }">
+                        <input name ="email" type="email" ng-required="true" class="form-control" ng-model="newUser.email" placeholder="eg: xxx@example.com **">
+                    </div>
+
+                    <div class="help-block" ng-messages="userForm.email.$error" ng-show="userForm.email.$touched">
+                        <!--<small ng-message="required" class = "text-danger">You cannot leave this empty </small>-->
+                        <small ng-message="email" class="text-danger">Invalid Email</small>
+                    </div>
+
+
+
+                </div>
+            </form>
+        </div>
+
+        <div class='form-group'>
+
+            <button class="btn btn-primary" ng-click="back()">
+                <span class="glyphicon glyphicon-arrow-left"></span> Back
+            </button>
+
+            <button class="btn btn-primary" ng-click="createUser()" ng-disabled ="userForm.$invalid">
+                <span class="glyphicon glyphicon-pencil"></span>Create
+            </button>
+        </div>
+        </div>
+    </div>
+
+
+
+</div>
+</div>
+</div>
